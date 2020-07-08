@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="5dp"
+    android:layout_margin="5dp"
+    android:background="#9B989191"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtThuTuSong"
+        android:text="1"
+
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:textColor="#020278"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/txtThuTuSong"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/CardViewSong"
+        app:cardCornerRadius="8dp"
+        android:layout_marginBottom="5dp">
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:id="@+id/imgSong"/>
+    </androidx.cardview.widget.CardView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNameSong"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="Tên bài hát"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:textColor="#000000"
+        android:layout_toRightOf="@+id/CardViewSong"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtSingerSong"
+        android:singleLine="true"
+        android:layout_marginTop="1dp"
+        android:textSize="12sp"
+        android:layout_marginLeft="10dp"
+        android:text="Tên ca sĩ"
+        android:gravity="bottom"
+
+        android:layout_below="@+id/txtNameSong"
+        android:layout_toRightOf="@+id/CardViewSong"/>
+
+    <ImageView
+        android:id="@+id/DislikeSong1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/CardViewMV"
+        android:layout_toLeftOf="@+id/imgMenuSong"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_unlike"
+        android:visibility="visible"
+        />
+    <ImageView
+        android:id="@+id/LikeSong1"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+
+        android:layout_below="@+id/CardViewMV"
+        android:layout_toLeftOf="@+id/imgMenuSong"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_like"
+        android:visibility="invisible"
+        />
+    <ImageView
+        android:id="@+id/imgMenuSong"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_more_vert_black_24dp_2"
+        />
+
+</RelativeLayout>

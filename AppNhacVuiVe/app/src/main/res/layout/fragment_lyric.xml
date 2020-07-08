@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:textSize="25dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtNameSongLyric"
+        android:text="Tên bài hát"/>
+    <ScrollView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txtNameSongLyric"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="300dp"
+
+            android:layout_height="wrap_content"
+            android:text="(CHƯA CÓ LYRIC)"
+            android:textSize="20dp"
+            android:id="@+id/txtLyricSong"
+            android:gravity="center"
+            android:layout_gravity="center|top"
+            android:textStyle="bold"
+            android:textColor="#FCFDFF"/>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

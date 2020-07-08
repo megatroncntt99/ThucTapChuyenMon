@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    >
+
+
+    <LinearLayout
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+
+        android:id="@+id/LLHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+
+            android:id="@+id/imgBack_or_Account"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:background="#FFFEFE"
+            android:onClick="eventClick"
+            android:src="@drawable/ic_person"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_layout"
+            android:orientation="horizontal"
+            android:layout_marginLeft="10dp">
+
+            <EditText
+
+                android:textSize="15dp"
+                android:background="@drawable/custom_search"
+                android:id="@+id/edtSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:hint="Search for songs, MVs, Playlist..."
+                android:onClick="eventClick"
+                android:singleLine="true" />
+
+            <ImageView
+
+                android:id="@+id/imgMicro_or_Delete"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:onClick="eventClick"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/ic_micro"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+    <View
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@+id/LLHome"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:id="@+id/view"
+        android:background="@drawable/custom_view"
+        />
+
+    <FrameLayout
+
+        android:saveEnabled="false"
+        android:layout_below="@+id/view"
+        android:layout_marginTop="5dp"
+        android:id="@+id/frameLayoutHome_or_Search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+
+
+
+</RelativeLayout>

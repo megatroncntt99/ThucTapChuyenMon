@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/CardViewMV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="200dp">
+
+            <ImageView
+                android:id="@+id/imgMV"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                />
+            <TextView
+                android:id="@+id/txtTimeMV"
+                android:layout_width="50dp"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/custum_time_mv"
+                android:text="00:00"
+                android:textColor="#FFFFFF" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgSinger"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/CardViewMV"
+        android:layout_marginTop="10dp"
+        android:background="#FFFEFE"
+        android:src="@drawable/ic_person"
+        android:tag="1"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/txtNameSongMV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/CardViewMV"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@+id/imgSinger"
+        android:text="Sợ phải kết thúc "
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtNameSingerMV"
+        android:layout_width="wrap_content"
+        android:lines="1"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtNameSongMV"
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@+id/imgSinger"
+        android:maxLines="2"
+        android:text="Nhật Phong "
+        android:textColor="#938D8D"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/imgDislikeMV"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/CardViewMV"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/ic_unlike"
+        android:visibility="visible"
+         />
+    <ImageView
+        android:id="@+id/imgLikeMV"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/CardViewMV"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/ic_like"
+        android:visibility="invisible"
+         />
+
+
+</RelativeLayout>

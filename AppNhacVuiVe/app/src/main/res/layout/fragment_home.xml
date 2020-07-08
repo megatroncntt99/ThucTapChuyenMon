@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/LLHome1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D7B8CACA"
+    android:orientation="vertical"
+    android:layout_margin="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.viewpager.widget.ViewPager
+            android:orientation="horizontal"
+            android:id="@+id/myViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <ProgressBar
+            android:id="@+id/progressBarHome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminateDrawable="@drawable/custom_progress_bar" />
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNetworkFail"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center|bottom"
+            android:lines="2"
+            android:gravity="center"
+            android:textSize="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+
+            android:background="@drawable/custom_txt_check"
+            android:textColor="#000000"
+            android:padding="10dp"
+            android:visibility="visible"
+            android:onClick="eventClick"
+            android:text="Không có kết nối mạng.  Chạm để thử lại"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorDivider" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/myTabLayout"
+        android:scrollbarSize="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        app:tabIndicatorHeight="0dp"
+        app:tabIndicatorColor="#CA0000"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#640088"
+        app:tabTextColor="#989898">
+
+    </com.google.android.material.tabs.TabLayout>
+
+</LinearLayout>

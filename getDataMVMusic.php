@@ -1,6 +1,6 @@
 <?php
   require "connectServer.php";
-  $query="SELECT mv_music.idMV,mv_music.keyMV,mv_music.imgMV,mv_music.imgSinger,mv_music.txtTimeMV, song.nameSong,song.singer 
+  $query="SELECT mv_music.idMV,mv_music.keyMV,mv_music.imgMV,mv_music.imgSinger,mv_music.txtTimeMV, song.nameSong,song.singer
   FROM `mv_music`,`song` 
   WHERE mv_music.idSong=song.idSong 
   order by rand(".date("Ymd").") LIMIT 25";
