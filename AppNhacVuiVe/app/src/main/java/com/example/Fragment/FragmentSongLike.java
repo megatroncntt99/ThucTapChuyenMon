@@ -19,6 +19,7 @@ import com.example.FunctionDesign.FunctionDesign;
 import com.example.Model.Song;
 import com.example.Service.APIService;
 import com.example.Service.DataService;
+import com.example.appnhacvuive.AllSongLikeActivity;
 import com.example.appnhacvuive.PlaySongActivity;
 import com.example.appnhacvuive.R;
 
@@ -54,6 +55,20 @@ public class FragmentSongLike extends Fragment {
                 startActivity(intent);
             }
         });
+        txtGoiY.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), AllSongLikeActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnSeeMoreSongLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(), AllSongLikeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void remap() {
@@ -74,8 +89,8 @@ public class FragmentSongLike extends Fragment {
                 songArrayList=response.body();
                 songLikeAdapter=new SongLikeAdapter(getActivity(),songArrayList);
                 lvSongLike.setAdapter(songLikeAdapter);
-                FunctionDesign functionDesign=new FunctionDesign();
-                functionDesign.setListViewHeightBasedOnChildren(lvSongLike);
+                new FunctionDesign().setListViewHeightBasedOnChildren(lvSongLike);
+
             }
 
             @Override

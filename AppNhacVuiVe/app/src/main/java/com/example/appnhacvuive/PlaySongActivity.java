@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -25,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.Adapter.PlaySongAdapter;
 import com.example.Fragment.FragmentListSong;
@@ -57,15 +59,15 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
     FragmentListSong fragmentListSong;
     FragmentLyric fragmentLyric;
     FragmentMusicDisc fragmentMusicDisc;
-    int i=5000;
+    int i = 5000;
 
     Toolbar toolbarPlaySong;
-     ViewPager viewPagerPlaySong;
+    ViewPager viewPagerPlaySong;
     SeekBar seekBarPlaySong;
-     CircleIndicator circleIndicatorPlaySong;
+    CircleIndicator circleIndicatorPlaySong;
     ImageView imgRandom, imgPrevious, imgPlay, imgNext, imgRepeat;
 
-    MediaPlayer mediaPlaySong;
+
 
     ProgressBar progressBar;
 
@@ -79,7 +81,6 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_song);
-
         StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(threadPolicy);
         getDataIntent();
@@ -88,22 +89,16 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
         addViewPager();
         eventClick();
 
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            if(notificationManager!=null){
-                notificationManager.cancelAll();
-
-                unregisterReceiver(broadcastReceiver);
-            }
-
+        if( MainActivity.mediaPlaySong!=null){
+            MainActivity.mediaPlaySong.stop();
+            onClearNotification();
+            MainActivity.mediaPlaySong.release();
+            MainActivity.mediaPlaySong = null;
         }
 
+
     }
+
 
     private void getDataIntent() {
         songArrayList.clear();
@@ -150,6 +145,25 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
         txtTotalTimeSong = findViewById(R.id.txtTotalTimeSong);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (notificationManager != null) {
+                notificationManager.cancelAll();
+                unregisterReceiver(broadcastReceiver);
+                Intent intent=new Intent(this,OnClearFromRecentService.class);
+                stopService(intent);
+            }
+        }
+//        if( MainActivity.mediaPlaySong!=null){
+//            MainActivity.mediaPlaySong.stop();
+//            onClearNotification();
+//            MainActivity.mediaPlaySong.release();
+//            MainActivity.mediaPlaySong = null;
+//        }
+    }
+
     private void init() {
         setSupportActionBar(toolbarPlaySong);
         if (getSupportActionBar() != null && songArrayList.size() > 0) {
@@ -157,16 +171,11 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
             toolbarPlaySong.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mediaPlaySong.stop();
-                    mediaPlaySong.release();;
-                    mediaPlaySong=null;
+
                     finish();
                 }
             });
-
             toolbarPlaySong.setTitleTextColor(Color.WHITE);
-
-
         }
 
 
@@ -194,40 +203,42 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
                 fragmentListSong = (FragmentListSong) playSongAdapter.getItem(0);
                 fragmentMusicDisc = (FragmentMusicDisc) playSongAdapter.getItem(1);
             }
-            CreateNotification.createNotification(PlaySongActivity.this,songArrayList.get(position),
+            CreateNotification.createNotification(PlaySongActivity.this, songArrayList.get(position),
                     R.drawable.ic_pause,
                     position,
-                    songArrayList.size()-1);
+                    songArrayList.size() - 1);
 
         }
     }
 
     public void loadSongFromInternet(String linkSong) {
         progressBar.setVisibility(View.VISIBLE);
+        fragmentMusicDisc.getStopObjectAnimator();
 
         try {
-            mediaPlaySong = new MediaPlayer();
-            mediaPlaySong.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlaySong.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            MainActivity.mediaPlaySong = new MediaPlayer();
+            MainActivity.mediaPlaySong.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            MainActivity.mediaPlaySong.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
-                    mediaPlaySong = null;
+                    MainActivity.mediaPlaySong = null;
 
                 }
             });
 
-            mediaPlaySong.setDataSource(linkSong);
-            mediaPlaySong.prepareAsync();
-            mediaPlaySong.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            MainActivity.mediaPlaySong.setDataSource(linkSong);
+            MainActivity.mediaPlaySong.prepareAsync();
+            MainActivity.mediaPlaySong.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
                     mp.start();
                     progressBar.setVisibility(View.GONE);
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
+                    fragmentMusicDisc.getStartObjectAnimator();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         createNotification();
-                        registerReceiver(broadcastReceiver,new IntentFilter("TRACKS_TRACKS"));
+                        registerReceiver(broadcastReceiver, new IntentFilter("TRACKS_TRACKS"));
                         startService(new Intent(getBaseContext(), OnClearFromRecentService.class));
                     }
                     TotalTime();
@@ -242,30 +253,28 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
     }
 
 
-
-
     private void TotalTime() {
 
-        txtTotalTimeSong.setText(dateFormat.format(mediaPlaySong.getDuration()));
-        seekBarPlaySong.setMax(mediaPlaySong.getDuration());
+        txtTotalTimeSong.setText(dateFormat.format( MainActivity.mediaPlaySong.getDuration()));
+        seekBarPlaySong.setMax( MainActivity.mediaPlaySong.getDuration());
     }
 
     private void UpdateTimeSong() {
-       i=1000;
+        i = 1000;
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mediaPlaySong != null) {
-                    seekBarPlaySong.setProgress(mediaPlaySong.getCurrentPosition());
-                    i+=new Random().nextInt(10000);
+                if ( MainActivity.mediaPlaySong != null) {
+                    seekBarPlaySong.setProgress( MainActivity.mediaPlaySong.getCurrentPosition());
+                    i += new Random().nextInt(10000);
 
-                    seekBarPlaySong.setSecondaryProgress(seekBarPlaySong.getProgress()+i);
+                    seekBarPlaySong.setSecondaryProgress(seekBarPlaySong.getProgress() + i);
 
 
                     txtTimeSong.setText(dateFormat.format(seekBarPlaySong.getProgress()));
                     handler.postDelayed(this, 300);
-                    mediaPlaySong.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    MainActivity.mediaPlaySong.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                         @Override
                         public void onCompletion(MediaPlayer mediaPlayer) {
                             next = true;
@@ -286,10 +295,10 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
             public void run() {
                 if (next == true) {
                     if (songArrayList.size() > 0) {
-                        if (mediaPlaySong.isPlaying() && mediaPlaySong != null) {
-                            mediaPlaySong.stop();
-                            mediaPlaySong.release();
-                            mediaPlaySong = null;
+                        if ( MainActivity.mediaPlaySong.isPlaying() &&  MainActivity.mediaPlaySong != null) {
+                            MainActivity.mediaPlaySong.stop();
+                            MainActivity.mediaPlaySong.release();
+                            MainActivity.mediaPlaySong = null;
                         }
                         if (position < songArrayList.size()) {
                             imgPlay.setImageResource(R.drawable.ic_pause);
@@ -362,8 +371,8 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
         imgPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mediaPlaySong.isPlaying() && playSongAdapter.getItem(0) != null && playSongAdapter.getItem(1) != null) {
-                   onSongPause();
+                if ( MainActivity.mediaPlaySong.isPlaying() && playSongAdapter.getItem(0) != null && playSongAdapter.getItem(1) != null) {
+                    onSongPause();
                 } else {
                     onSongPlay();
                 }
@@ -418,7 +427,7 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                mediaPlaySong.seekTo(seekBar.getProgress());
+                MainActivity.mediaPlaySong.seekTo(seekBar.getProgress());
 
 
             }
@@ -443,11 +452,11 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
 
     @Override
     public void getSong(int index) {
-        position=index;
-        if (mediaPlaySong.isPlaying() && mediaPlaySong != null) {
-            mediaPlaySong.stop();
-            mediaPlaySong.release();
-            mediaPlaySong = null;
+        position = index;
+        if ( MainActivity.mediaPlaySong.isPlaying() &&  MainActivity.mediaPlaySong != null) {
+            MainActivity.mediaPlaySong.stop();
+            MainActivity.mediaPlaySong.release();
+            MainActivity.mediaPlaySong = null;
         }
         song = songArrayList.get(position);
         viewPagerPlaySong.setCurrentItem(1);
@@ -457,36 +466,34 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
     }
 
 
-
-    public void createNotification(){
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            NotificationChannel channel=new NotificationChannel(CreateNotification.CHANNEL_ID,
-                    "Nhạc vui vẻ", NotificationManager.IMPORTANCE_HIGH);
+    public void createNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(CreateNotification.CHANNEL_ID,
+                    "Nhạc vui vẻ", NotificationManager.IMPORTANCE_LOW);
             channel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
             channel.enableLights(true);
-            notificationManager=getSystemService(NotificationManager.class);
-            if(notificationManager !=null){
+            notificationManager = getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
         }
     }
 
-    BroadcastReceiver broadcastReceiver=new BroadcastReceiver() {
+    BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            String action="";
-            if(intent!=null && intent.hasExtra("action_name") ){
-                action=intent.getExtras().getString("action_name");
+            String action = "";
+            if (intent != null && intent.hasExtra("action_name")) {
+                action = intent.getExtras().getString("action_name");
             }
-            switch (action){
+            switch (action) {
                 case CreateNotification.ACTION_PREVIOUS:
                     onSongPrevious();
                     break;
                 case CreateNotification.ACTION_PLAY:
-                    if(mediaPlaySong.isPlaying() && playSongAdapter.getItem(0) != null && playSongAdapter.getItem(1) != null){
+                    if ( MainActivity.mediaPlaySong.isPlaying() && playSongAdapter.getItem(0) != null && playSongAdapter.getItem(1) != null) {
                         onSongPause();
-                    }
-                    else {
+                    } else {
                         onSongPlay();
                     }
                     UpdateTimeSong();
@@ -494,18 +501,22 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
                 case CreateNotification.ACTION_NEXT:
                     onSongNext();
                     break;
+                case CreateNotification.ACTION_CLOSE:
+                    onClearNotification();
+                    break;
             }
 
         }
     };
+
     @Override
     public void onSongPrevious() {
 
         if (songArrayList.size() > 0) {
-            if (mediaPlaySong.isPlaying() && mediaPlaySong != null) {
-                mediaPlaySong.stop();
-                mediaPlaySong.release();
-                mediaPlaySong = null;
+            if ( MainActivity.mediaPlaySong.isPlaying() &&  MainActivity.mediaPlaySong != null) {
+                MainActivity.mediaPlaySong.stop();
+                MainActivity.mediaPlaySong.release();
+                MainActivity.mediaPlaySong = null;
             }
             if (position < songArrayList.size()) {
                 imgPlay.setImageResource(R.drawable.ic_pause);
@@ -534,7 +545,7 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
 
                 CreateNotification.createNotification(PlaySongActivity.this,
                         songArrayList.get(position),
-                        R.drawable.ic_pause,position,
+                        R.drawable.ic_pause, position,
                         songArrayList.size());
             }
         }
@@ -553,10 +564,10 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
     @Override
     public void onSongNext() {
         if (songArrayList.size() > 0) {
-            if (mediaPlaySong.isPlaying() && mediaPlaySong != null) {
-                mediaPlaySong.stop();
-                mediaPlaySong.release();
-                mediaPlaySong = null;
+            if ( MainActivity.mediaPlaySong.isPlaying() &&  MainActivity.mediaPlaySong != null) {
+                MainActivity.mediaPlaySong.stop();
+                MainActivity.mediaPlaySong.release();
+                MainActivity.mediaPlaySong = null;
             }
             if (position < songArrayList.size()) {
                 imgPlay.setImageResource(R.drawable.ic_pause);
@@ -605,9 +616,9 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
 
     @Override
     public void onSongPlay() {
-        mediaPlaySong.start();
+        MainActivity.mediaPlaySong.start();
         imgPlay.setImageResource(R.drawable.ic_pause);
-        fragmentMusicDisc.getStartObjectAnimator();
+        fragmentMusicDisc.getResumeObjectAnimator();
         fragmentListSong.setImagePause();
 
         CreateNotification.createNotification(PlaySongActivity.this,
@@ -619,8 +630,9 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
 
     @Override
     public void onSongPause() {
-        mediaPlaySong.pause();
+        MainActivity.mediaPlaySong.pause();
         imgPlay.setImageResource(R.drawable.ic_play);
+
         fragmentMusicDisc.getPauseObjectAnimator();
         fragmentListSong.setImagePlaying();
 
@@ -630,6 +642,15 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
                 position,
                 songArrayList.size());
 
+
+    }
+
+    @Override
+    public void onClearNotification() {
+        if( MainActivity.mediaPlaySong!=null&&! MainActivity.mediaPlaySong.isPlaying()){
+           Intent intent=new Intent(this,OnClearFromRecentService.class);
+           stopService(intent);
+        }
     }
 }
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -96,11 +97,78 @@ public class PlaylistSongActivity extends AppCompatActivity {
             GetDataSongRankSong(rankSong.getIdRankSong());
         }
 
-
+        getLike();
         addEvent();
     }
 
+    private void getLike() {
+        if (playlist != null && !playlist.getNamePlayList().equals("")) {
+            String sql="select * from PlaylistLike";
+            boolean like=false;
+            Cursor cursor= MainActivity.database.GetData(sql);
+            while (cursor.moveToNext()){
+                if(playlist.getIdPlayList().trim().equals(cursor.getString(0))){
+                    like=true;
+                    break;
+                }
+            }
+            if(like){
+                UnLikePlaylistSong.setVisibility(View.INVISIBLE);
+                LikePlaylistSong.setVisibility(View.VISIBLE);
+            }
+            else {
+                UnLikePlaylistSong.setVisibility(View.VISIBLE);
+                LikePlaylistSong.setVisibility(View.INVISIBLE);
+            }
 
+        }
+        else if (category != null && !category.getNameCategory().equals("")){
+
+            String sql="select * from CategoryLike";
+            boolean like=false;
+            Cursor cursor= MainActivity.database.GetData(sql);
+            while (cursor.moveToNext()){
+                if(category.getIdCategory().trim().equals(cursor.getString(0))){
+                    like=true;
+                    break;
+                }
+            }
+            if(like){
+                UnLikePlaylistSong.setVisibility(View.INVISIBLE);
+                LikePlaylistSong.setVisibility(View.VISIBLE);
+            }
+            else {
+                UnLikePlaylistSong.setVisibility(View.VISIBLE);
+                LikePlaylistSong.setVisibility(View.INVISIBLE);
+            }
+
+        }
+        else if (album != null && !album.getNameAlbum().equals("")){
+
+            String sql="select * from AlbumLike";
+            boolean like=false;
+            Cursor cursor= MainActivity.database.GetData(sql);
+            while (cursor.moveToNext()){
+                if(album.getIdAlbum().trim().equals(cursor.getString(0))){
+                    like=true;
+                    break;
+                }
+            }
+            if(like){
+                UnLikePlaylistSong.setVisibility(View.INVISIBLE);
+                LikePlaylistSong.setVisibility(View.VISIBLE);
+            }
+            else {
+                UnLikePlaylistSong.setVisibility(View.VISIBLE);
+                LikePlaylistSong.setVisibility(View.INVISIBLE);
+            }
+
+        }
+        else {
+            UnLikePlaylistSong.setVisibility(View.INVISIBLE);
+            LikePlaylistSong.setVisibility(View.INVISIBLE);
+        }
+    }
 
 
     private void GetDataSongAD(String IdAd) {
@@ -365,6 +433,7 @@ public class PlaylistSongActivity extends AppCompatActivity {
                             if (result.equals("success")) {
                                 UnLikePlaylistSong.setVisibility(View.INVISIBLE);
                                 LikePlaylistSong.setVisibility(View.VISIBLE);
+                                MainActivity.database.SetData("insert into PlaylistLike values('"+playlist.getIdPlayList().trim()+"') ");
                                 Toast t = Toast.makeText(PlaylistSongActivity.this, "Đã thêm " + playlist.getNamePlayList() + " vào thư viện ", Toast.LENGTH_SHORT);
                                 t.setGravity(Gravity.CENTER, 0, 0);
                                 t.show();
@@ -391,6 +460,8 @@ public class PlaylistSongActivity extends AppCompatActivity {
                             if (result.equals("success")) {
                                 UnLikePlaylistSong.setVisibility(View.INVISIBLE);
                                 LikePlaylistSong.setVisibility(View.VISIBLE);
+                                MainActivity.database.SetData("insert into CategoryLike values('"+category.getIdCategory().trim()+"') ");
+
                                 Toast t = Toast.makeText(PlaylistSongActivity.this, "Đã thêm " + category.getNameCategory() + " vào thư viện ", Toast.LENGTH_SHORT);
                                 t.setGravity(Gravity.CENTER, 0, 0);
                                 t.show();
@@ -417,6 +488,9 @@ public class PlaylistSongActivity extends AppCompatActivity {
                             if (result.equals("success")) {
                                 UnLikePlaylistSong.setVisibility(View.INVISIBLE);
                                 LikePlaylistSong.setVisibility(View.VISIBLE);
+
+                                MainActivity.database.SetData("insert into AlbumLike values('"+album.getIdAlbum().trim()+"') ");
+
                                 Toast t = Toast.makeText(PlaylistSongActivity.this, "Đã thêm " + album.getNameAlbum() + " vào thư viện ", Toast.LENGTH_SHORT);
                                 t.setGravity(Gravity.CENTER, 0, 0);
                                 t.show();
@@ -451,6 +525,7 @@ public class PlaylistSongActivity extends AppCompatActivity {
                             if (result.equals("success")) {
                                 UnLikePlaylistSong.setVisibility(View.VISIBLE);
                                 LikePlaylistSong.setVisibility(View.INVISIBLE);
+                                MainActivity.database.SetData("DELETE FROM PlaylistLike WHERE IdPlaylist='"+playlist.getIdPlayList().trim()+"' ");
                                 Toast t = Toast.makeText(PlaylistSongActivity.this, "Đã gỡ " + playlist.getNamePlayList() + " khỏi thư viện ", Toast.LENGTH_SHORT);
                                 t.setGravity(Gravity.CENTER, 0, 0);
                                 t.show();
@@ -477,6 +552,8 @@ public class PlaylistSongActivity extends AppCompatActivity {
                             if (result.equals("success")) {
                                 UnLikePlaylistSong.setVisibility(View.VISIBLE);
                                 LikePlaylistSong.setVisibility(View.INVISIBLE);
+
+                                MainActivity.database.SetData("DELETE FROM CategoryLike WHERE IdCategory='"+category.getIdCategory().trim()+"' ");
                                 Toast t = Toast.makeText(PlaylistSongActivity.this, "Đã gỡ " + category.getNameCategory() + " khỏi thư viện ", Toast.LENGTH_SHORT);
                                 t.setGravity(Gravity.CENTER, 0, 0);
                                 t.show();
@@ -503,6 +580,9 @@ public class PlaylistSongActivity extends AppCompatActivity {
                             if (result.equals("success")) {
                                 UnLikePlaylistSong.setVisibility(View.VISIBLE);
                                 LikePlaylistSong.setVisibility(View.INVISIBLE);
+
+                                MainActivity.database.SetData("DELETE FROM AlbumLike WHERE IdAlbum='"+album.getIdAlbum().trim()+"' ");
+
                                 Toast t = Toast.makeText(PlaylistSongActivity.this, "Đã gỡ " + album.getNameAlbum() + " khỏi thư viện ", Toast.LENGTH_SHORT);
                                 t.setGravity(Gravity.CENTER, 0, 0);
                                 t.show();

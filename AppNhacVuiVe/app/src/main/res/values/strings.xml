@@ -12,4 +12,8 @@
 
     <string name="key_abs_demo">ca-app-pub-1173582046773521~4378364250</string>
 
+    <string name="facebook_app_id">1226570797681360</string>
+    <string name="fb_login_protocol_scheme">fb1226570797681360</string>
+
+
 </resources>

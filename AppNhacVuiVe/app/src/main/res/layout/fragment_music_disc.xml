@@ -10,7 +10,7 @@
         app:civ_border_width="3dp"
         android:id="@+id/circleImageViewDiscSong"
         android:layout_centerInParent="true"
-        android:layout_height="350dp"/>
+        android:layout_height="330dp"/>
 
 
 </RelativeLayout>

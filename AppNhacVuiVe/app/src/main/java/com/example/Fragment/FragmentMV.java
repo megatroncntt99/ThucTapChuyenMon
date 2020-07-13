@@ -2,6 +2,7 @@ package com.example.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class FragmentMV extends Fragment {
         mvMusicArrayList=new ArrayList<>();
         progressBar=viewMV.findViewById(R.id.progressBarMV);
     }
-    private void GetData() {
+   private void GetData() {
 
         progressBar.setVisibility(View.VISIBLE);
         DataService dataService= APIService.getService();

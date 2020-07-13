@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -19,84 +20,92 @@ import com.example.appnhacvuive.R;
 import com.squareup.picasso.Picasso;
 
 public class CreateNotification {
-    public static final String CHANNEL_ID="channel_1";
+    public static final String CHANNEL_ID = "channel_1";
 
-    public static final String ACTION_PREVIOUS="action_previous";
-    public static final String ACTION_PLAY="action_play";
-    public static final String ACTION_NEXT="action_next";
-    public static  Notification notification;
+    public static final String ACTION_PREVIOUS = "action_previous";
+    public static final String ACTION_PLAY = "action_play";
+    public static final String ACTION_NEXT = "action_next";
+    public static final String ACTION_CLOSE = "action_close";
 
-    public static void createNotification(Context context, Song song,int btnPlay,int position,int size) {
+    public static Notification notification;
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.O){
-            NotificationManagerCompat notificationManagerCompat=NotificationManagerCompat.from(context);
-            MediaSessionCompat mediaSessionCompat=new MediaSessionCompat(context,"tag");
+    public static void createNotification(Context context, Song song, int btnPlay, int position, int size) {
 
-            ImageView imageView=new ImageView(context);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
+            MediaSessionCompat mediaSessionCompat = new MediaSessionCompat(context, "tag");
+
+            ImageView imageView = new ImageView(context);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            Bitmap icon=null;
-            if(!song.getImgSong().trim().equals("")){
-                Picasso.get().load(song.getImgSong()).into(imageView);
+            Bitmap icon = null;
+            if (!song.getImgSong().trim().equals("")) {
+                Picasso.get().load(song.getImgSong()).error(R.drawable.ic_error_outline_black_24dp).into(imageView);
 
-                if(imageView!=null){
-                    icon= ((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                if (imageView != null) {
+                    icon = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                 }
+                icon = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
             }
-
 
 
             PendingIntent pendingIntentPrevious;
             int drw_previous;
             if (position == 0) {
-                pendingIntentPrevious=null;
-                drw_previous=0;
-            }
-            else {
-                Intent intentPrevious=new Intent(context,NotificationActionService.class)
+                pendingIntentPrevious = null;
+                drw_previous = 0;
+            } else {
+                Intent intentPrevious = new Intent(context, NotificationActionService.class)
                         .setAction(ACTION_PREVIOUS);
-                pendingIntentPrevious =PendingIntent.getBroadcast(context,0,intentPrevious,PendingIntent.FLAG_UPDATE_CURRENT);
-                drw_previous=R.drawable.ic_skip_previous;
+                pendingIntentPrevious = PendingIntent.getBroadcast(context, 0, intentPrevious, PendingIntent.FLAG_UPDATE_CURRENT);
+                drw_previous = R.drawable.ic_skip_previous;
             }
 
-            Intent intentPlay=new Intent(context,NotificationActionService.class)
+            Intent intentPlay = new Intent(context, NotificationActionService.class)
                     .setAction(ACTION_PLAY);
-            PendingIntent pendingIntentPlay =PendingIntent.getBroadcast(context,0,intentPlay,PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntentPlay = PendingIntent.getBroadcast(context, 0, intentPlay, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
             PendingIntent pendingIntentNext;
             int drw_next;
-            if (position == size) {
-                pendingIntentNext=null;
-                drw_next=0;
-            }
-            else {
-                Intent intentNext=new Intent(context,NotificationActionService.class)
+            if (position == size||position == size-1) {
+                pendingIntentNext = null;
+                drw_next = 0;
+            } else {
+                Intent intentNext = new Intent(context, NotificationActionService.class)
                         .setAction(ACTION_NEXT);
-                pendingIntentNext =PendingIntent.getBroadcast(context,0,intentNext,PendingIntent.FLAG_UPDATE_CURRENT);
-                drw_next=R.drawable.ic_skip_next;
+                pendingIntentNext = PendingIntent.getBroadcast(context, 0, intentNext, PendingIntent.FLAG_UPDATE_CURRENT);
+                drw_next = R.drawable.ic_skip_next;
             }
 
-            notification=new NotificationCompat.Builder(context,CHANNEL_ID)
-                    .setSmallIcon(R.mipmap.ic_launcher_foreground)
-                    .setContentTitle(song.getNameSong())
-                    .setContentText(song.getSinger())
-                    .setLargeIcon(icon)
-                    .setOnlyAlertOnce(true)
-                    .setAutoCancel(true)
-                    .setShowWhen(true)
-                    .addAction(drw_previous,"Previous",pendingIntentPrevious)
-                    .addAction(btnPlay,"Play",pendingIntentPlay)
-                    .addAction(drw_next,"Next",pendingIntentNext)
-                    .setPriority(NotificationCompat.PRIORITY_LOW)
-                    .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
-                            .setShowActionsInCompactView(0, 1, 2)
-                            .setMediaSession(mediaSessionCompat.getSessionToken()))
-                    .build();
-            notificationManagerCompat.notify(1,notification);
+
+            PendingIntent pendingIntentClose;
+            int drw_close=R.drawable.ic_clear_black_24dp;
+            Intent intentClose = new Intent(context, NotificationActionService.class).setAction(ACTION_CLOSE);
+            pendingIntentClose = PendingIntent.getBroadcast(context, 0, intentClose, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-        }
+        notification = new NotificationCompat.Builder(context, CHANNEL_ID)
+
+                .setSmallIcon(R.mipmap.ic_launcher_foreground)
+                .setContentTitle(song.getNameSong())
+                .setContentText(song.getSinger())
+                .setLargeIcon(icon)
+                .setOnlyAlertOnce(true)
+                .setAutoCancel(true)
+                .setShowWhen(true)
+                .addAction(drw_previous, "Previous", pendingIntentPrevious)
+                .addAction(btnPlay, "Play", pendingIntentPlay)
+                .addAction(drw_next, "Next", pendingIntentNext)
+                .addAction(drw_close, "close", pendingIntentClose)
+                .setPriority(NotificationCompat.PRIORITY_LOW)
+                .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(0, 1, 2, 3)
+                        .setMediaSession(mediaSessionCompat.getSessionToken()))
+                .build();
+        notificationManagerCompat.notify(1, notification);
+
     }
+}
 
 
 }

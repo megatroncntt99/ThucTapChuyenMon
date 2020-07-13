@@ -121,8 +121,8 @@ public class AllAlbumActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId()==R.id.menu_search){
 
-            Toast.makeText(this, "Click vào ô tìm kiếm", Toast.LENGTH_SHORT).show();
-            finish();
+            Intent intent = new Intent(AllAlbumActivity.this, SearchActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

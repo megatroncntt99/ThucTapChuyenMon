@@ -20,10 +20,12 @@ import java.util.ArrayList;
 
 public class AllPlaylistAdapter extends RecyclerView.Adapter<AllPlaylistAdapter.ViewHolder> {
     Context context;
+    int layout;
     ArrayList<Playlist> playlistArrayList;
 
-    public AllPlaylistAdapter(Context context, ArrayList<Playlist> playlistArrayList) {
+    public AllPlaylistAdapter(Context context, int layout, ArrayList<Playlist> playlistArrayList) {
         this.context = context;
+        this.layout = layout;
         this.playlistArrayList = playlistArrayList;
     }
 
@@ -31,7 +33,7 @@ public class AllPlaylistAdapter extends RecyclerView.Adapter<AllPlaylistAdapter.
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(context);
-        View view=inflater.inflate(R.layout.row_item_all_playlist,parent,false);
+        View view=inflater.inflate(layout,parent,false);
         return new ViewHolder(view);
     }
 

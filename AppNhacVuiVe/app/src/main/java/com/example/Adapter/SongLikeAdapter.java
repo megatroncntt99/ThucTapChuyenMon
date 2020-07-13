@@ -1,10 +1,13 @@
 package com.example.Adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import android.widget.Toast;
 import com.example.Model.Song;
 import com.example.Service.APIService;
 import com.example.Service.DataService;
+import com.example.appnhacvuive.MainActivity;
 import com.example.appnhacvuive.R;
 import com.squareup.picasso.Picasso;
 
@@ -29,6 +33,11 @@ public class SongLikeAdapter extends BaseAdapter {
     public SongLikeAdapter(Context context, ArrayList<Song> songArrayList) {
         this.context = context;
         this.songArrayList = songArrayList;
+    }
+    public void addItemSongLike(ArrayList<Song> allSongs){
+        songArrayList.addAll(allSongs);
+        this.notifyDataSetChanged();
+
     }
 
     @Override
@@ -67,10 +76,29 @@ public class SongLikeAdapter extends BaseAdapter {
         }
         final Song sl=songArrayList.get(i);
 
+
         Picasso.get().load(sl.getImgSong()).into(viewHolder.imgSongLike);
 
         viewHolder.txtNameSongLike.setText(sl.getNameSong().trim());
         viewHolder.txtSingerSongLike.setText(sl.getSinger());
+
+        String sql="select * from SongLike";
+        boolean like=false;
+        Cursor cursor= MainActivity.database.GetData(sql);
+        while (cursor.moveToNext()){
+            if(sl.getIdSong().trim().equals(cursor.getString(0))){
+                like=true;
+                break;
+            }
+        }
+        if(like){
+            viewHolder.LikeSong.setVisibility(View.VISIBLE);
+            viewHolder.DislikeSong.setVisibility(View.INVISIBLE);
+        }
+        else {
+            viewHolder.LikeSong.setVisibility(View.INVISIBLE);
+            viewHolder.DislikeSong.setVisibility(View.VISIBLE);
+        }
 
         viewHolder.LikeSong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +112,8 @@ public class SongLikeAdapter extends BaseAdapter {
                         if(result.equals("success")){
                             viewHolder.LikeSong.setVisibility(View.INVISIBLE);
                             viewHolder.DislikeSong.setVisibility(View.VISIBLE);
+
+                            MainActivity.database.SetData("DELETE FROM SongLike WHERE IdSong='"+sl.getIdSong()+"' ");
                             Toast t=Toast.makeText(context,"Đã gỡ "+sl.getNameSong()+" khỏi thư viện ",Toast.LENGTH_SHORT);
                             t.setGravity(Gravity.CENTER,0,0);
                             t.show();
@@ -115,6 +145,7 @@ public class SongLikeAdapter extends BaseAdapter {
                         if(result.equals("success")){
                             viewHolder.LikeSong.setVisibility(View.VISIBLE);
                             viewHolder.DislikeSong.setVisibility(View.INVISIBLE);
+                            MainActivity.database.SetData("insert into SongLike values('"+sl.getIdSong()+"') ");
                             Toast t=Toast.makeText(context,"Đã thêm "+sl.getNameSong()+" vào thư viện ",Toast.LENGTH_SHORT);
                             t.setGravity(Gravity.CENTER,0,0);
                             t.show();
@@ -144,6 +175,7 @@ public class SongLikeAdapter extends BaseAdapter {
                 t.show();
             }
         });
+
         return view;
     }
 

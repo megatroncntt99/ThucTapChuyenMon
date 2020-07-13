@@ -29,13 +29,6 @@
             app:expandedTitleTextAppearance="@android:color/transparent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/custom_bg_playlistsong" />
-
-
-
 
 
             <androidx.appcompat.widget.Toolbar

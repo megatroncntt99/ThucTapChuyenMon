@@ -36,7 +36,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragmentPlaylist extends Fragment {
-    public static final String TAG="AAA";
     View viewPlaylist;
     RecyclerView rwPlaylist;
     PlaylistAdapter playlistAdapter;

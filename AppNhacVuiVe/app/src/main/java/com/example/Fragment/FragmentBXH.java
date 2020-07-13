@@ -36,19 +36,20 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class FragmentBXH extends Fragment {
+
     View viewBXH;
-    ListView lvTopSong,lvTopMV;
+    ListView lvTopSong, lvTopMV;
     ArrayList<RankSong> rankSongArrayList;
     TopSongAdapter topSongAdapter;
     AdView adView;
     ProgressBar progressBar;
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       viewBXH=inflater.inflate(R.layout.fragment_bxh,container,false);
+        viewBXH = inflater.inflate(R.layout.fragment_bxh, container, false);
+
         remap();
         GetData();
         AddAdMods();
@@ -61,41 +62,45 @@ public class FragmentBXH extends Fragment {
         lvTopSong.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(getActivity(), PlaylistSongActivity.class);
-                intent.putExtra("idRankSong",rankSongArrayList.get(i));
+                Intent intent = new Intent(getActivity(), PlaylistSongActivity.class);
+                intent.putExtra("idRankSong", rankSongArrayList.get(i));
                 startActivity(intent);
             }
         });
     }
 
     private void AddAdMods() {
-        adView=viewBXH.findViewById(R.id.adViewBXH);
-        AdRequest adRequest=new AdRequest.Builder().build();
+        adView = viewBXH.findViewById(R.id.adViewBXH);
+        AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
 
 
     private void remap() {
-        lvTopSong=viewBXH.findViewById(R.id.lvTopSong);
-        lvTopMV=viewBXH.findViewById(R.id.lvTopMV);
-        rankSongArrayList=new ArrayList<>();
-        progressBar=viewBXH.findViewById(R.id.progressBarBXHSong);
+        lvTopSong = viewBXH.findViewById(R.id.lvTopSong);
+        lvTopMV = viewBXH.findViewById(R.id.lvTopMV);
+        rankSongArrayList = new ArrayList<>();
+        progressBar = viewBXH.findViewById(R.id.progressBarBXHSong);
 
 
     }
-    private void GetData() {
+
+    public void GetData() {
+
         rankSongArrayList.clear();
+        topSongAdapter = new TopSongAdapter(getActivity(), rankSongArrayList);
+        lvTopSong.setAdapter(topSongAdapter);
         progressBar.setVisibility(View.VISIBLE);
-        DataService dataService= APIService.getService();
-        Call<ArrayList<RankSong>> callBack=dataService.GetDataRankSong();
+        DataService dataService = APIService.getService();
+        Call<ArrayList<RankSong>> callBack = dataService.GetDataRankSong();
         callBack.enqueue(new Callback<ArrayList<RankSong>>() {
             @Override
             public void onResponse(Call<ArrayList<RankSong>> call, Response<ArrayList<RankSong>> response) {
 
-                rankSongArrayList=response.body();
-                topSongAdapter=new TopSongAdapter(getActivity(),rankSongArrayList);
+                rankSongArrayList = response.body();
+                topSongAdapter = new TopSongAdapter(getActivity(), rankSongArrayList);
                 lvTopSong.setAdapter(topSongAdapter);
-                FunctionDesign functionDesign=new FunctionDesign();
+                FunctionDesign functionDesign = new FunctionDesign();
                 functionDesign.setListViewHeightBasedOnChildren(lvTopSong);
                 progressBar.setVisibility(View.GONE);
             }
@@ -106,7 +111,6 @@ public class FragmentBXH extends Fragment {
             }
         });
     }
-
 
 
 }

@@ -2,6 +2,7 @@ package com.example.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.Model.Song;
 import com.example.Service.APIService;
 import com.example.Service.DataService;
+import com.example.appnhacvuive.MainActivity;
 import com.example.appnhacvuive.PlaySongActivity;
 import com.example.appnhacvuive.R;
 import com.squareup.picasso.Picasso;
@@ -50,10 +52,28 @@ public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongAdapte
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Song song=songArrayList.get(position);
+
         holder.txtThuTuSong.setText(position+1+". ");
         Picasso.get().load(song.getImgSong()).into(holder.imgSong);
         holder.txtNameSong.setText(song.getNameSong());
         holder.txtSingerSong.setText(song.getSinger());
+        String sql="select * from SongLike";
+        boolean like=false;
+        Cursor cursor= MainActivity.database.GetData(sql);
+        while (cursor.moveToNext()){
+            if(song.getIdSong().trim().equals(cursor.getString(0))){
+                like=true;
+                break;
+            }
+        }
+        if(like){
+            holder.LikeSong.setVisibility(View.VISIBLE);
+            holder.DislikeSong.setVisibility(View.INVISIBLE);
+        }
+        else {
+            holder.LikeSong.setVisibility(View.INVISIBLE);
+            holder.DislikeSong.setVisibility(View.VISIBLE);
+        }
 
         holder.LikeSong.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +87,7 @@ public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongAdapte
                         if(result.equals("success")){
                             holder.LikeSong.setVisibility(View.INVISIBLE);
                             holder.DislikeSong.setVisibility(View.VISIBLE);
+                            MainActivity.database.SetData("DELETE FROM SongLike WHERE IdSong='"+song.getIdSong()+"' ");
                             Toast t=Toast.makeText(context,"Đã gỡ "+song.getNameSong()+" khỏi thư viện ",Toast.LENGTH_SHORT);
                             t.setGravity(Gravity.CENTER,0,0);
                             t.show();
@@ -99,6 +120,7 @@ public class PlaylistSongAdapter extends RecyclerView.Adapter<PlaylistSongAdapte
                         if(result.equals("success")){
                             holder.LikeSong.setVisibility(View.VISIBLE);
                             holder.DislikeSong.setVisibility(View.INVISIBLE);
+                            MainActivity.database.SetData("insert into SongLike values('"+song.getIdSong()+"') ");
                             Toast t=Toast.makeText(context,"Đã thêm "+song.getNameSong()+" vào thư viện ",Toast.LENGTH_SHORT);
                             t.setGravity(Gravity.CENTER,0,0);
                             t.show();

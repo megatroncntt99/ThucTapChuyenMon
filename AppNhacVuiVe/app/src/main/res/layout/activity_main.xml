@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    >
+    tools:context=".MainActivity">
 
 
     <LinearLayout
@@ -21,8 +20,7 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
-
-            android:id="@+id/imgBack_or_Account"
+            android:id="@+id/imgAccount"
             android:layout_width="30dp"
             android:layout_height="40dp"
             android:background="#FFFEFE"
@@ -42,10 +40,11 @@
 
                 android:textSize="15dp"
                 android:background="@drawable/custom_search"
-                android:id="@+id/edtSearch"
+                android:id="@+id/edtToSearch"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_weight="1"
+                android:cursorVisible="false"
                 android:drawableLeft="@android:drawable/ic_menu_search"
                 android:hint="Search for songs, MVs, Playlist..."
                 android:onClick="eventClick"
@@ -53,7 +52,7 @@
 
             <ImageView
 
-                android:id="@+id/imgMicro_or_Delete"
+                android:id="@+id/imgMicro"
                 android:layout_width="20dp"
                 android:layout_height="40dp"
                 android:onClick="eventClick"
@@ -73,15 +72,65 @@
         android:background="@drawable/custom_view"
         />
 
-    <FrameLayout
-
-        android:saveEnabled="false"
+    <LinearLayout
         android:layout_below="@+id/view"
-        android:layout_marginTop="5dp"
-        android:id="@+id/frameLayoutHome_or_Search"
+
+        android:id="@+id/LLHome1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/myViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.viewpager.widget.ViewPager>
+
+            <ProgressBar
+                android:id="@+id/progressBarHome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminateDrawable="@drawable/custom_progress_bar" />
+            <fragment
+                android:name="com.example.Fragment.FragmentPlaySong"
+                android:id="@+id/frameLayoutPlaySong"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"/>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/colorDivider" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/myTabLayout"
+            android:scrollbarSize="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            app:tabIndicatorHeight="0dp"
+            app:tabIndicatorColor="#CA0000"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#640088"
+            app:tabTextColor="#989898">
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </LinearLayout>
 
 
 

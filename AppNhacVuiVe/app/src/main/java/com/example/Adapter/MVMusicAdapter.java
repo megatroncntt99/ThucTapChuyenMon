@@ -6,6 +6,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,7 +77,7 @@ public class MVMusicAdapter extends BaseAdapter {
             viewHolder= (ViewHolder) view.getTag();
         }
         final MVMusic MV=mvMusicArrayList.get(i);
-        Picasso.get().load(MV.getImgSongMV()).into(viewHolder.imgMV);
+        Picasso.get().load(MV.getImgSongMV()).placeholder(R.drawable.custom_progress_bar).error(R.drawable.ic_error_outline_black_24dp).into(viewHolder.imgMV);
         Picasso.get().load(MV.getImgSinger()).into(viewHolder.imgSinger);
 
 
@@ -140,7 +142,6 @@ public class MVMusicAdapter extends BaseAdapter {
 
             }
         });
-
 
         return view;
     }

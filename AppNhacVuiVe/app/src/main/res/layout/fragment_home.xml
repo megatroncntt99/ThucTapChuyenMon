@@ -1,32 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/LLHome1"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#D7B8CACA"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fillViewport="true"
     android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:scrollbars="none"
+    tools:context="com.example.Fragment.FragmentHome">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/LL_Banner"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.viewpager.widget.ViewPager
-            android:orientation="horizontal"
-            android:id="@+id/myViewPager"
+        <fragment
+            android:id="@+id/fragmentBanner"
+            android:name="com.example.Fragment.FragmentAdvertisement"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content" />
 
-        </androidx.viewpager.widget.ViewPager>
 
-        <ProgressBar
-            android:id="@+id/progressBarHome"
-            android:layout_width="wrap_content"
+        <fragment
+            android:layout_marginTop="10dp"
+            android:id="@+id/fragmentPlaylist"
+            android:name="com.example.Fragment.FragmentPlaylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <fragment
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:indeterminateDrawable="@drawable/custom_progress_bar" />
+            android:id="@+id/fragmentThemeCategory"
+            android:name="com.example.Fragment.Fragment_Theme_Category"/>
+        <fragment
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentAlbum"
+            android:name="com.example.Fragment.FragmentAlbum"/>
+
+        <fragment
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragmentSongLike"
+            android:name="com.example.Fragment.FragmentSongLike"/>
         <TextView
             android:layout_width="220dp"
             android:layout_height="wrap_content"
@@ -43,27 +63,9 @@
             android:textColor="#000000"
             android:padding="10dp"
             android:visibility="visible"
-            android:onClick="eventClick"
+
             android:text="Không có kết nối mạng.  Chạm để thử lại"/>
-    </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/colorDivider" />
+    </LinearLayout>
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/myTabLayout"
-        android:scrollbarSize="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
-        app:tabIndicatorHeight="0dp"
-        app:tabIndicatorColor="#CA0000"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="#640088"
-        app:tabTextColor="#989898">
-
-    </com.google.android.material.tabs.TabLayout>
-
-</LinearLayout>
+</ScrollView>

@@ -7,6 +7,7 @@ import com.example.Model.Category;
 import com.example.Model.MVMusic;
 import com.example.Model.Playlist;
 import com.example.Model.RankSong;
+import com.example.Model.Search;
 import com.example.Model.Song;
 import com.example.Model.Theme;
 import com.example.Model.ThemeCategory;
@@ -104,5 +105,16 @@ public interface DataService {
     @POST("getDataTopSong.php")
     Call<ArrayList<Song>> GetDataTopSong(@Field("IdRankSong") String idRankSong);
 
+    @FormUrlEncoded
+    @POST("getDataSearch.php")
+    Call<Search> GetDataSearchSong(@Field("KeySearch") String keySearch);
+
+
+    @GET ("getData6Theme.php")
+    Call<ArrayList<Theme>> GetData6Theme();
+
+    @FormUrlEncoded
+    @POST("getAllDataSongLike.php")
+    Call<ArrayList<Song>> GetAllDataSongLike(@Field("Page") String page);
 
 }
