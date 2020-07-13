@@ -1,0 +1,2 @@
+rootProject.name='AppNhacVuiVe'
+include ':app'
