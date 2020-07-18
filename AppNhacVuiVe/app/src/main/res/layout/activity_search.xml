@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    tools:context=".SearchActivity">
+
+    <LinearLayout
+        android:id="@+id/LLSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:background="@android:color/transparent"
+
+            android:src="@drawable/ic_back"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/custom_layout"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edtSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_search"
+                android:cursorVisible="true"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Search for songs, MVs, Playlist..."
+                android:imeOptions="actionSearch"
+                android:singleLine="true"
+                android:textSize="15dp" />
+
+            <ImageView
+                android:id="@+id/imgMicro_Delete"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="25dp"
+                android:src="@drawable/ic_micro" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/txtNetworkFailSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LLSearch"
+        android:layout_marginTop="3dp"
+        android:background="#C1C33D25"
+        android:gravity="center"
+        android:text="Không có kết nối mạng"
+        android:textColor="@color/colorWhite"
+        android:visibility="gone" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/LLSearch"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/custom_view" />
+
+    <ScrollView
+        android:id="@+id/scrollViewSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/txtNetworkFailSearch"
+        android:layout_marginTop="20dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:scrollbars="none">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutHistory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center|left"
+                    android:text="LỊCH SỬ TÌM KIẾM"
+                    android:textColor="#000000"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtClearHistory"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center"
+                    android:text="Xóa"
+                    android:textColor="#FF6A01"
+                    android:textStyle="bold" />
+
+                <com.wefika.flowlayout.FlowLayout
+                    android:id="@+id/flowLayoutSearchHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtClearHistory"
+                    android:layout_margin="10dp">
+
+                </com.wefika.flowlayout.FlowLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txtKeyHot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeLayoutHistory"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center|left"
+                android:text="TỪ KHÓA HOT"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <com.wefika.flowlayout.FlowLayout
+                android:id="@+id/flowLayoutKeyHot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtKeyHot"
+                android:layout_margin="10dp">
+
+            </com.wefika.flowlayout.FlowLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/flowLayoutKeyHot">
+
+                <TextView
+                    android:id="@+id/txtTitleTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+
+                    android:gravity="center|left"
+                    android:text="Chủ đề và thể loại >"
+                    android:textColor="#000000"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+                <GridView
+                    android:id="@+id/gridViewThem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txtTitleTheme"
+                    android:layout_margin="10dp"
+                    android:horizontalSpacing="20dp"
+                    android:numColumns="2"
+                    android:scrollbars="none"
+                    android:verticalSpacing="20dp" />
+
+                <TextView
+                    android:id="@+id/txtSeeMoreThemeSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/gridViewThem"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:text="Xem thêm"
+                    android:textColor="#8216CA" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/linearLayoutSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/LLSearch"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutSearch"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:scrollbarSize="10dp"
+            app:tabIndicatorColor="#CA0000"
+            app:tabIndicatorHeight="2dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#C005D8"
+            app:tabTextColor="#4A4C4A">
+
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPagerSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

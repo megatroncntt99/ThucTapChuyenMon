@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#D98A7E7E">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarLogin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:titleTextColor="#3C373C" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/custom_bg_login">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgFB"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_color="@color/colorWhite"
+            app:civ_border_width="3dp" />
+
+        <TextView
+            android:id="@+id/txtNameFB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/imgFB"
+            android:text="Megatron"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtNameFB"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@+id/imgFB"
+            android:text="gmail.com"
+            android:textColor="#676161"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/llLogin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="THƯ VIÊN"
+            android:textColor="#000000"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/llLibrary"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutSong"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="#00FF80">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_library_song"
+                     />
+
+                <TextView
+                    android:id="@+id/txtLibrarySong"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/imageView"
+                    android:gravity="center"
+                    android:text="Bài hát"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLibraryNumberSong"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtLibrarySong"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/imageView"
+                    android:gravity="center|left"
+                    android:text="0"
+                    android:textColor="#7C7373"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_chevron_right_black_24dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewLibrarySong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutPlaylist"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="#2FFF00">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView1"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="23dp"
+                android:src="@drawable/ic_library_playlist"
+               />
+
+                <TextView
+                    android:id="@+id/txtLibraryPlaylist"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/imageView1"
+                    android:gravity="center"
+                    android:text="Playlist"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLibraryNumberPlaylist"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtLibraryPlaylist"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/imageView1"
+                    android:gravity="center|left"
+                    android:text="0"
+                    android:textColor="#7C7373"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_chevron_right_black_24dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewLibraryPlaylist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeLayoutCategory"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="#00FD05">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView3"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="23dp"
+                    android:src="@drawable/ic_library_category"
+                    />
+
+                <TextView
+                    android:id="@+id/txtLibraryCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="13dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:gravity="center"
+                    android:text="Thể loại"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLibraryNumberCategory"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtLibraryCategory"
+                    android:layout_marginLeft="13dp"
+                    android:layout_toRightOf="@+id/imageView3"
+                    android:gravity="center|left"
+                    android:text="0"
+                    android:textColor="#7C7373"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_chevron_right_black_24dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerViewLibraryCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutAlbum"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="#00FFEA">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_library_album"
+                     />
+
+                <TextView
+                    android:id="@+id/txtLibraryAlbum"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/imageView2"
+                    android:gravity="center"
+                    android:text="Album"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLibraryNumberAlbum"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtLibraryAlbum"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/imageView2"
+                    android:gravity="center|left"
+                    android:text="0"
+                    android:textColor="#7C7373"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_chevron_right_black_24dp"/>
+
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayoutMV"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:background="#0050FF">
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/imageView4"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_video_library_black_24dp"
+                   />
+
+                <TextView
+                    android:id="@+id/txtLibraryMV"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:gravity="center"
+                    android:text="MV"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtLibraryNumberMV"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtLibraryMV"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/imageView4"
+                    android:gravity="center|left"
+                    android:text="0"
+                    android:textColor="#7C7373"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/ic_chevron_right_black_24dp"/>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llSeeMore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:tag="1">
+
+            <TextView
+                android:id="@+id/txtSeeMoreLibrary"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/ic_expand_more"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:text="Xem thêm"
+                android:textColor="#EA710E"
+                android:textStyle="bold"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
+
+
+</LinearLayout>

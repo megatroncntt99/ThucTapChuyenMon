@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AllSongLibraryActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayoutSongLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#00FF80">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarSongLibrary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/appBarLayoutSongLibrary"
+        android:background="@drawable/custom_view_mv" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutNoData"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_queue_music_black_24dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Bạn chưa có bài hát nào"
+            android:textSize="20dp" />
+
+
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appBarLayoutSongLibrary"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:scrollbars="none"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/custom_layout"
+                android:orientation="horizontal"
+                android:weightSum="10">
+
+                <TextView
+                    android:id="@+id/txtSearchSongLibrary"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="8"
+                    android:background="@drawable/custom_search"
+                    android:drawableLeft="@android:drawable/ic_menu_search"
+                    android:gravity="center|left"
+                    android:hint="Tìm kiếm bài hát và nghệ sĩ"
+                    android:singleLine="true"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:id="@+id/imgFilter"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+
+                    android:layout_weight="2"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_unfiltered" />
+
+
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+
+                android:id="@+id/btnPlaySongLibrary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="#C60D59"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_playlist_random"
+                app:fabSize="normal" />
+
+
+            <ListView
+                android:id="@+id/lvAllSongLibrary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="3dp"
+                android:scrollbars="vertical" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

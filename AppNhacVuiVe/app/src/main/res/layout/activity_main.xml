@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+
+
+    <LinearLayout
+        android:id="@+id/LLHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imgAccount"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:background="#FFFEFE"
+            android:onClick="eventClick"
+            android:src="@drawable/ic_person"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/custom_layout"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/edtToSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@drawable/custom_search"
+                android:drawableLeft="@android:drawable/ic_menu_search"
+                android:gravity="center|left"
+                android:hint="Search for songs, MVs, Playlist..."
+                android:onClick="eventClick"
+                android:singleLine="true"
+                android:textSize="15dp" />
+
+            <ImageView
+
+                android:id="@+id/imgMicro"
+                android:layout_width="20dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="25dp"
+                android:onClick="eventClick"
+                android:src="@drawable/ic_micro" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/LLHome"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/custom_view" />
+
+    <LinearLayout
+        android:id="@+id/LLHome1"
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/view"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtNetworkFailHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/LLSearch"
+            android:layout_marginTop="3dp"
+            android:background="#C1C33D25"
+            android:gravity="center"
+            android:text="Không có kết nối mạng"
+            android:textColor="@color/colorWhite"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1">
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/myViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </androidx.viewpager.widget.ViewPager>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+        </RelativeLayout>
+
+        <fragment
+            android:id="@+id/fragmentPlaySong"
+            android:name="com.example.Fragment.FragmentPlaySong"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_alignParentBottom="true" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="@drawable/custom_view" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/myTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:scrollbarSize="10dp"
+            app:tabIndicatorColor="#CA0000"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="#640088"
+            app:tabTextColor="#989898">
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
