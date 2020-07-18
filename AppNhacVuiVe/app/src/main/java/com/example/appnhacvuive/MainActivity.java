@@ -171,6 +171,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        myViewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                swipeRefreshLayout.setEnabled(false);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                        swipeRefreshLayout.setEnabled(true);
+                        break;
+                }
+                return false;
+            }
+        });
+
     }
 
 
