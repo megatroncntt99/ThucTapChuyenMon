@@ -1,7 +1,7 @@
 ﻿# THỰC TẬP CHUYÊN MÔN NĂM HỌC 2019-2020
-Họ tên: Nguyễn Văn Vân
-Mã sinh viên: 5851071087
-Lớp: Công nghệ thông tin K58
+Họ tên: Nguyễn Văn Vân.
+Mã sinh viên: 5851071087.
+Lớp: Công nghệ thông tin K58.
 # Đề tài: Android_App Music
 # I. Công Nghệ Sử Dụng
 * Công nghệ: Retrofit, Google API, Facebook API
