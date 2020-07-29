@@ -4,9 +4,9 @@
 * Lớp: Công nghệ thông tin K58.
 # Đề tài: Android_App Music
 ## I. Công Nghệ Sử Dụng
-* Công nghệ: Retrofit, Google API, Facebook API
-* Công cụ: Android Studio, Visual Code, MySQL, SQLite 
-* Ngôn ngữ lập trình: Java, XML, PHP
+* Công nghệ: Retrofit, Google API, Facebook API.
+* Công cụ: Android Studio, Visual Code, MySQL, SQLite.
+* Ngôn ngữ lập trình: Java, XML, PHP.
 ## II. Các Chức Năng Đã Hoàn Thiện
 * Đăng nhập ứng dụng bằng tài khoản Facebook.
 * Nghe nhạc online, xem các music video.
