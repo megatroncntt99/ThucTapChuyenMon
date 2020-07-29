@@ -71,7 +71,7 @@ public class AllCategoryLibraryActivity extends AppCompatActivity {
 
             }
         });
-        getSupportActionBar().setTitle("Chủ đề ("+categoryArrayList.size()+") ");
+        getSupportActionBar().setTitle("Thể loại ("+categoryArrayList.size()+") ");
 
         toolbarCategoryLibrary.setTitleTextColor(Color.BLACK);
     }

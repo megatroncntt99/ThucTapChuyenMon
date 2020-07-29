@@ -62,6 +62,7 @@ public class FragmentSearchSong extends Fragment {
             progressBar=viewSearchSong.findViewById(R.id.progressBarSearchSong);
         }
         progressBar.setVisibility(View.VISIBLE);
+        txtNoDataSearch.setVisibility(View.GONE);
         DataService dataService= APIService.getService();
         Call<Search> callback=dataService.GetDataSearchSong(key);
         callback.enqueue(new Callback<Search>() {

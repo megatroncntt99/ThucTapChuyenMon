@@ -1,6 +1,7 @@
 package com.example.appnhacvuive;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -48,6 +50,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 8;
     public static ImageView imgAccount;
     ImageView imgMicro;
     TextView edtToSearch;
@@ -74,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     FragmentHome fragmentHome;
     FragmentBXH fragmentBXH;
     FragmentMV fragmentMV;
+    public static String KeySearch="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,19 +172,6 @@ public class MainActivity extends AppCompatActivity {
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 },4000);
-            }
-        });
-
-        myViewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                swipeRefreshLayout.setEnabled(false);
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_UP:
-                        swipeRefreshLayout.setEnabled(true);
-                        break;
-                }
-                return false;
             }
         });
 
@@ -304,9 +295,15 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case REQUEST_CODE_MICROPHONE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL ,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Tìm Kiếm");
+                    startActivityForResult(intent,REQUEST_CODE);
 
                 } else {
-                    Toast.makeText(this, "Bạn đã từ chối quyền Ghi Âm Nên không thể thực hiện thao tác này", Toast.LENGTH_SHORT).show();
+                    Toast t = Toast.makeText(this, "Bạn đã từ chối quyền Ghi Âm Nên không thể thực hiện thao tác này", Toast.LENGTH_SHORT);
+                    t.setGravity(Gravity.CENTER, 0, 0);
+                    t.show();
                 }
 
                 break;
@@ -355,7 +352,7 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.anim_from_left,R.anim.anim_to_right);
                 break;
             case R.id.imgMicro:
-                requestPermissionCall();
+                requestPermissionAudio();
                 break;
             case R.id.edtToSearch:
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
@@ -380,7 +377,14 @@ public class MainActivity extends AppCompatActivity {
         timeBack = System.currentTimeMillis();
     }
 
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==REQUEST_CODE && resultCode==RESULT_OK && data!=null && data.hasExtra(RecognizerIntent.EXTRA_RESULTS)){
+            ArrayList<String> key=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            KeySearch=key.get(0).trim().toLowerCase();
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

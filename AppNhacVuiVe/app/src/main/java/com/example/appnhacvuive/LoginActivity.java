@@ -266,7 +266,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if ((int) llSeeMore.getTag() == 1) {
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llLibrary.getLayoutParams();
-                    params.height = (int) convertDpToPixels(376, LoginActivity.this);
+                    params.height = (int) convertDpToPixels(351, LoginActivity.this);
                     llLibrary.setLayoutParams(params);
                     llSeeMore.setTag(2);
                     txtSeeMoreLibrary.setText("Thu gọn");
@@ -275,7 +275,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else if ((int) llSeeMore.getTag() == 2) {
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) llLibrary.getLayoutParams();
-                    params.height = (int) convertDpToPixels(150, LoginActivity.this);
+                    params.height = (int) convertDpToPixels(140, LoginActivity.this);
                     llLibrary.setLayoutParams(params);
                     llSeeMore.setTag(1);
                     txtSeeMoreLibrary.setText("Xem thêm");

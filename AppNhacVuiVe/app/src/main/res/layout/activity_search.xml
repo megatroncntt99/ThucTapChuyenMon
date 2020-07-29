@@ -52,7 +52,7 @@
 
             <ImageView
                 android:id="@+id/imgMicro_Delete"
-                android:layout_width="20dp"
+                android:layout_width="30dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="25dp"
                 android:src="@drawable/ic_micro" />

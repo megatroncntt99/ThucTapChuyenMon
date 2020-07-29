@@ -1,15 +1,22 @@
 package com.example.appnhacvuive;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
+import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.RecognizerIntent;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +35,7 @@ import com.example.Fragment.FragmentSearchMV;
 import com.example.Fragment.FragmentSearchPlaylist;
 import com.example.Fragment.FragmentSearchSong;
 import com.example.FunctionDesign.FunctionDesign;
+
 import com.example.Model.Theme;
 import com.example.NetworkCheck.ConnectionReceiver;
 import com.example.Service.APIService;
@@ -40,6 +48,8 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.example.appnhacvuive.MainActivity.REQUEST_CODE_MICROPHONE;
 
 public class SearchActivity extends AppCompatActivity implements TabLayout.OnTabSelectedListener {
 
@@ -65,6 +75,7 @@ public class SearchActivity extends AppCompatActivity implements TabLayout.OnTab
 
     TextView txtTitleTheme, txtSeeMoreThemeSearch;
     GridView gridViewThem;
+    public static final int REQUEST_CODE=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +87,6 @@ public class SearchActivity extends AppCompatActivity implements TabLayout.OnTab
         addEvent();
         addSearchHistory();
         addKeyHot();
-
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -86,6 +96,7 @@ public class SearchActivity extends AppCompatActivity implements TabLayout.OnTab
             }
         }, 1000);
     }
+
 
 
 
@@ -237,6 +248,8 @@ public class SearchActivity extends AppCompatActivity implements TabLayout.OnTab
         txtSeeMoreThemeSearch = findViewById(R.id.txtSeeMoreThemeSearch);
         gridViewThem = findViewById(R.id.gridViewThem);
 
+        edtSearch.setText(MainActivity.KeySearch);
+        edtSearch.setSelection(edtSearch.getText().toString().trim().length());
     }
 
 
@@ -308,12 +321,13 @@ public class SearchActivity extends AppCompatActivity implements TabLayout.OnTab
             @Override
             public void onClick(View view) {
                 if ((int) imgMicro_or_Delete.getTag() == 1) {
-                    Toast.makeText(SearchActivity.this, "Ghi âm", Toast.LENGTH_SHORT).show();
+                    requestPermissionAudio();
                 } else if ((int) imgMicro_or_Delete.getTag() == 2) {
                     edtSearch.setText("");
                 }
             }
         });
+
 
 
 
@@ -416,7 +430,38 @@ public class SearchActivity extends AppCompatActivity implements TabLayout.OnTab
     }
 
 
+    public void requestPermissionAudio() {
+        ActivityCompat.requestPermissions(SearchActivity.this,
+                new String[]{Manifest.permission.RECORD_AUDIO}, REQUEST_CODE_MICROPHONE);
 
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_MICROPHONE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent intent=new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL ,RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                    intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Tìm kiếm");
+                    startActivityForResult(intent,REQUEST_CODE);
+                } else {
+                    Toast t = Toast.makeText(this, "Bạn đã từ chối quyền Ghi Âm Nên không thể thực hiện thao tác này", Toast.LENGTH_SHORT);
+                    t.setGravity(Gravity.CENTER, 0, 0);
+                    t.show();
+                }
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==REQUEST_CODE && resultCode==RESULT_OK && data!=null){
+            ArrayList<String> key=data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            edtSearch.setText(key.get(0).trim().toLowerCase());
+            edtSearch.setSelection(edtSearch.getText().toString().trim().length());
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
 
 

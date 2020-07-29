@@ -56,6 +56,7 @@ public class FragmentSearchPlaylist extends Fragment {
     public void GetData() {
 
         progressBar.setVisibility(View.VISIBLE);
+        txtNoDataSearchPlaylist.setVisibility(View.GONE);
         DataService dataService = APIService.getService();
         Call<Search> callback = dataService.GetDataSearchSong(key);
         callback.enqueue(new Callback<Search>() {

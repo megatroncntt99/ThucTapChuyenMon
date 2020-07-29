@@ -348,10 +348,7 @@ public class PlaySongActivity extends AppCompatActivity implements GetDataSong, 
                     onSongPlay();
                 }
                 UpdateTimeSong();
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    startService(new Intent(PlaySongActivity.this, OnClearFromRecentService.class));
-                }
-
+                startService(new Intent(PlaySongActivity.this, OnClearFromRecentService.class));
             }
         });
 

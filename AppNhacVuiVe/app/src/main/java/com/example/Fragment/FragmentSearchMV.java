@@ -59,6 +59,7 @@ public class FragmentSearchMV extends Fragment {
     public void GetData() {
 
         progressBar.setVisibility(View.VISIBLE);
+        txtNoDataSearchMV.setVisibility(View.GONE);
         DataService dataService= APIService.getService();
         Call<Search> callback=dataService.GetDataSearchSong(key);
         callback.enqueue(new Callback<Search>() {

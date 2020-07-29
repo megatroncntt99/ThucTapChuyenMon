@@ -23,6 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_bg_login">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -83,13 +84,13 @@
         <LinearLayout
             android:id="@+id/llLibrary"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="140dp"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/relativeLayoutSong"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="70dp"
                 android:background="#00FF80">
 
                 <ImageView
@@ -147,7 +148,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayoutPlaylist"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="70dp"
                 android:background="#2FFF00">
                 <ImageView
                     android:scaleType="fitXY"
@@ -204,8 +205,8 @@
             <RelativeLayout
                 android:id="@+id/relativeLayoutCategory"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
-                android:background="#00FD05">
+                android:layout_height="70dp"
+                android:background="#075A09">
                 <ImageView
                     android:scaleType="fitXY"
                     android:id="@+id/imageView3"
@@ -262,7 +263,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayoutAlbum"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="70dp"
                 android:background="#00FFEA">
 
                 <ImageView
@@ -313,7 +314,7 @@
             <RelativeLayout
                 android:id="@+id/relativeLayoutMV"
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="70dp"
                 android:background="#0050FF">
                 <ImageView
                     android:scaleType="fitXY"
@@ -387,8 +388,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="10dp" />
 
 
 </LinearLayout>
